@@ -64,7 +64,7 @@ class CheckersServer {
       
       
       //continue to receive and send data
-      while (true) {
+      while (true) { //remove old code
          //LOOP OF MOVES ::
          //Wait for Client move
          //Update Matrix

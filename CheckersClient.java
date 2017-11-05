@@ -9,6 +9,7 @@ import java.net.*;
 //There will be a checkers Server and Client
 //Server Starts the Game and Client connects
 class CheckersClient {
+   public static int [][] pieces = new int [8][8];
    public static void main(String argv[]) throws Exception {
    //Connect to Checkers Server 
       String sentence = "";
@@ -37,8 +38,7 @@ class CheckersClient {
 
       //Create GUI of board
       
-      while (Continue.equals("y"))
-      {
+      while (Continue.equals("y")) {//remove old code
          //LOOP OF MOVES ::
          //Wait for Server move
          //Update Matrix
