@@ -32,9 +32,10 @@ class CheckersClient {
       BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
       
       //Create Matrix of Pieces
-   
+      SetBoard();
+      PrintBoard();
+
       //Create GUI of board
-   
       
       while (Continue.equals("y"))
       {
@@ -115,4 +116,61 @@ class CheckersClient {
    
       
    }
+   
+   public static void SetBoard() //initially sets up pieces on gameboard for a new game
+   {
+      int temp = 0;
+      /*
+      Empty = 0
+      Red Pawn = 1
+      Black Pawn = 2
+      Red King = 3
+      Black King = 4
+      */
+      // pieces[columns][rows]
+      
+      //set all zeros
+      for(int i = 0; i<8; i++)
+      {
+         for(int j = 0; j<8; j++)
+         {
+            pieces[i][j]=0;         
+         }
+      }
+      
+      
+      //red left side of board
+      for(int i = 0; i<3; i++) //columns
+      {    
+         for(int j = i%2; j<8; j+=2) //rows
+         {
+            pieces[i][j] = 1;
+         }
+         
+      }
+      //black right side of board
+      for(int i = 5; i<8; i++) //columns
+      {
+         for(int j = i%2; j<8; j+=2) //rows
+         {
+            pieces[i][j] = 2;
+         }
+      }
+   }
+   
+   public static void PrintBoard()
+   {
+      System.out.println();
+      System.out.println("    A B C D E F G H");
+      for(int i = 0; i<8; i++)
+      {
+         System.out.print(i + ":  ");
+         for(int j = 0; j<8; j++)
+         {
+           System.out.print(pieces[j][i] + " ");         
+         }
+         System.out.println();
+      }
+   }
+
 }
