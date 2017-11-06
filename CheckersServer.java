@@ -10,16 +10,12 @@ import java.net.*;
 
 //There will be a checkers Server and Client
 //Server Starts the Game
+//SERVER IS THE BLACK PLAYER BECAUSE RED GOES FIRST
 class CheckersServer {
    public static int [][] pieces = new int [8][8];
    public static void main(String argv[]) throws Exception {
       //Wait for Checkers Client 
-      String clientSentence = "";
-      String operation = "";
-      String messageToClient = "";
-      String numbers = "";
-      int clientAnswer = 0;
-      int serverAnswer = 0;
+      String clientMove = "", serverMove = "";
       String temp = "";
         
       //set up socket
@@ -54,114 +50,35 @@ class CheckersServer {
       //Create GUI of board
       
       
-      //FIRST SERVER MOVE
-      //Ask user for move (Have user type moves Ex: A1 to B2
-      //Tell user if move is valid
-      //Change Matrix value
-      //Send valid move to other player
-      //Repaint
-
-      
-      
       //continue to receive and send data
       while (true) { //remove old code
          //LOOP OF MOVES ::
          //Wait for Client move
+         System.out.println("Waiting for Client... ");
+         clientMove = inFromClient.readLine();
+         System.out.println("Client Move: " + clientMove);
+         
          //Update Matrix
          //Repaint
+         
          //Ask user for move (Have user type moves Ex: A1 to B2
+         System.out.println("Where do you want to move? ");
+         serverMove = inFromUser.readLine();         
+
          //Tell user if move is valid
+         
          //Change Matrix value
+         
+         
          //Send valid move to other player
+         outToClient.writeBytes(serverMove + "\n");
+         
          //Repaint
 
-         operation = inFromClient.readLine();
-      
-         System.out.println("Operation: " + operation);
          
+         if(serverMove.equals("q") || clientMove.equals("q"))
+            break;
          
-         if(operation.equals("q") || operation.equals("Q") || operation.equals("quit"))
-         {
-             messageToClient = "quit";
-             //System.out.println("Message to Client is:" + messageToClient);
-             outToClient.writeBytes(messageToClient + "\n");
-             //System.out.println("Message SENT to Client");
-             break;
-         }
-         else if(!(operation.equals("+") || operation.equals("-") || operation.equals("/") || operation.equals("*")))
-         {
-             messageToClient = "Please enter a valid operation or enter q to quit.";
-             //System.out.println("Message to Client is:" + messageToClient);
-             outToClient.writeBytes(messageToClient + "\n");
-             //System.out.println("Message SENT to Client");    
-         }
-         else
-         {
-            //enter 4 numbers
-            System.out.println("Enter 4 numbers to perform operation on (first 2 on client and second 2 on server: ");
-            numbers = inFromUser.readLine();
-            String[] SNumbers = numbers.split("\\s+");
-            int[] Numbers = new int[4];
-            for(int i = 0; i < 4; i++)
-            {
-               Numbers[i] = Integer.parseInt(SNumbers[i]);
-            }
-   
-            
-            messageToClient = (Numbers[0] + " " + Numbers[1]);
-            //System.out.println("Message to Client is:" + messageToClient);
-            outToClient.writeBytes(messageToClient + "\n");
-            //System.out.println("Message SENT to Client");
-                    
-                        
-            //perform operations on #s 3 and 4
-            if(operation.equals("+"))
-            {
-               serverAnswer = Numbers[2] + Numbers [3];
-            }
-            else if(operation.equals("-"))
-            {
-               serverAnswer = Numbers[2] - Numbers [3];
-            }
-            else if(operation.equals("/"))
-            {
-               serverAnswer = Numbers[2] / Numbers [3];
-            }
-            else if(operation.equals("*"))
-            {
-               serverAnswer = Numbers[2] * Numbers [3];
-            }
-            
-            temp = inFromClient.readLine();
-      
-            clientAnswer = Integer.parseInt(temp);
-            
-            //System.out.println("RECEIVED Client Answer: " + clientAnswer);
-            
-            //System.out.println("Answer to Client is: " + serverAnswer);
-            //send answer to client
-            outToClient.writeBytes("" + serverAnswer + "\n");
-            //System.out.println("Answer SENT to Client");
-   
-            //print both the client and server operations            
-            System.out.println("Client ANSWER is: " + clientAnswer);
-            System.out.println("Server ANSWER is: " + serverAnswer  + "\n");
-            
-            System.out.println("Do you want to perform another operation? (y/n)");
-            temp = inFromUser.readLine();
-            
-            if(temp.equals("y") || temp.equals("Y") || temp.equals("yes"))
-            {
-               outToClient.writeBytes("y\n");
-               System.out.println("\n");
-   
-            }
-            else
-            {
-               outToClient.writeBytes("no\n");
-               break;
-            }
-         }
       }   
    }
    
@@ -185,8 +102,6 @@ class CheckersServer {
             pieces[i][j]=0;         
          }
       }
-      
-      
       //red left side of board
       for(int i = 0; i<3; i++) //columns
       {    
