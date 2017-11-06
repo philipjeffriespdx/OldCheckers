@@ -51,7 +51,7 @@ class CheckersServer {
       
       
       //continue to receive and send data
-      while (true) { //remove old code
+      while (true) { 
          //LOOP OF MOVES ::
          //Wait for Client move
          System.out.println("Waiting for Client... ");

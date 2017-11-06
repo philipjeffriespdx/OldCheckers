@@ -34,7 +34,7 @@ class CheckersClient {
 
       //Create GUI of board
       
-      while (true) {//remove old code
+      while (true) {
          //LOOP OF MOVES ::
          //Wait for Server move
          //Update Matrix
