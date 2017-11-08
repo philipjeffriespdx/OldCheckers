@@ -16,7 +16,9 @@ class CheckersServer {
    public static void main(String argv[]) throws Exception {
       //Wait for Checkers Client 
       String clientMove = "", serverMove = "";
-      String temp = "";
+      char temp;
+      int fromCol, fromRow, toCol, toRow;
+      boolean valid = false;
         
       //set up socket
       ServerSocket welcomeSocket = new ServerSocket(6789);
@@ -57,23 +59,77 @@ class CheckersServer {
          System.out.println("Waiting for Client... ");
          clientMove = inFromClient.readLine();
          System.out.println("Client Move: " + clientMove);
+         temp = clientMove.charAt(0);
+         fromCol = temp - 65;
+         temp = clientMove.charAt(1);
+         fromRow = temp - 48;
+         temp = clientMove.charAt(3);
+         toCol = temp - 65;
+         temp = clientMove.charAt(4);
+         toRow = temp - 48;
          
          //Update Matrix
+         System.out.println("Client From  : " + fromCol + " " + fromRow);
+         System.out.println("Client To    : " + toCol + " " + toRow);
+         
          //Repaint
+         PrintBoard();
          
-         //Ask user for move (Have user type moves Ex: A1 to B2
-         System.out.println("Where do you want to move? ");
-         serverMove = inFromUser.readLine();         
+         valid = false;
+         while(!valid)
+         {
+            //Ask user for move (Have user type moves Ex: A1 to B2)
+            System.out.println("Where do you want to move? From(Col)(Row) To(Col)(Row)");
+            serverMove = inFromUser.readLine();         
+            temp = serverMove.charAt(0);
+            fromCol = temp - 65;
+            temp = serverMove.charAt(1);
+            fromRow = temp - 48;
+            temp = serverMove.charAt(3);
+            toCol = temp - 65;
+            temp = serverMove.charAt(4);
+            toRow = temp - 48;
+   
+            //Tell user if move is valid
+            if(pieces[fromCol][fromRow]!=1 || pieces[fromCol][fromRow]!=3) //valid piece square
+            {
+              System.out.println("There is no piece at the location you selected.");
+              continue; 
+            } 
+            else if(pieces[fromCol][fromRow]==1 && ((fromCol-1)!=toCol || ((fromRow+1)!=toRow || (fromRow-1)!=toRow))  ) //pawn moves
+            {
+              System.out.println("Invalid Pawn Move");
+              continue;
+            } 
+            else if(pieces[fromCol][fromRow]==3 && (((fromCol-1)!=toCol || (fromCol+1)!=toCol) || ((fromRow+1)!=toRow || (fromRow-1)!=toRow))  ) //king moves
+            {
+              System.out.println("Invalid King Move");
+              continue;
+            }
+            else if(toCol<0 || toRow<0 || toCol>8 || toRow>8) //outside the playing field
+            {
+              System.out.println("Out of Bounds Move");
+              continue;
+            }
+                        
+            //Check to see if there is a another piece in the next square
+            
+            //Change Matrix value
+            
 
-         //Tell user if move is valid
+            valid = true;
+         }
          
-         //Change Matrix value
          
+         System.out.println("Server From  : " + fromCol + " " + fromRow);
+         System.out.println("Server To    : " + toCol + " " + toRow);
+
          
          //Send valid move to other player
          outToClient.writeBytes(serverMove + "\n");
          
          //Repaint
+         PrintBoard();
 
          
          if(serverMove.equals("q") || clientMove.equals("q"))

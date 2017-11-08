@@ -14,7 +14,9 @@ class CheckersClient {
    public static void main(String argv[]) throws Exception {
    //Connect to Checkers Server 
       String clientMove = "", serverMove = "";
-      String temp = "";
+      char temp;
+      int fromCol, fromRow, toCol, toRow;
+      boolean valid = true;
       
       //read user input
       BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
@@ -46,7 +48,7 @@ class CheckersClient {
          //Repaint
 
          //send move
-         System.out.println("Where do you want to move?");
+         System.out.println("Where do you want to move? From(Col)(Row) To(Col)(Row)");
          clientMove = inFromUser.readLine();
          outToServer.writeBytes(clientMove + '\n');
          
