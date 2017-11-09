@@ -113,6 +113,15 @@ class CheckersServer {
             }
                         
             //Check to see if there is a another piece in the next square
+            //there is a piece but nothing past
+            if((pieces[toCol][toRow]==2 || pieces[toCol][toRow]==4) && )
+            
+            
+            //there is a piece and something on the other side
+            
+            //there are multiple hops
+            
+            
             
             //Change Matrix value
             
