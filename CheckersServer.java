@@ -7,6 +7,9 @@ Checkers Game
 //I just copied my first networking lab to be able to build on top of it:
 import java.io.*;
 import java.net.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 //There will be a checkers Server and Client
 //Server Starts the Game
@@ -114,7 +117,9 @@ class CheckersServer {
                         
             //Check to see if there is a another piece in the next square
             //there is a piece but nothing past
-            if((pieces[toCol][toRow]==2 || pieces[toCol][toRow]==4) && )
+            
+            /*Commented out to compile*/
+            //if((pieces[toCol][toRow]==2 || pieces[toCol][toRow]==4) && )
             
             
             //there is a piece and something on the other side
@@ -198,6 +203,47 @@ class CheckersServer {
            System.out.print(pieces[j][i] + " ");         
          }
          System.out.println();
+      }
+   }
+   /*So I was thinking we can create a base JFrame that has no buttons and it is just squares that alternate Red and Black.
+   Then we can set buttons ontop of this GUI that are color-less and has those act as the pieces. ie, click A1 then click on B2 to move a piece.*/
+   public class CheckersBoard extends JFrame
+   {
+      private Container contents;
+      private JButton [][] squares;
+      int sides = 8;
+      
+      public void PaintBoard()
+      {
+         //super( "CHECKERS!" );
+         contents = getContentPane( );
+
+         // set layout to an 8-by-8 Grid
+         contents.setLayout( new GridLayout( sides, sides ) );
+
+         squares = new JButton[sides][sides];
+
+         ButtonHandler bh = new ButtonHandler( );
+         setSize( 800, 800 );
+         setVisible( true );
+      }
+      
+      private class ButtonHandler implements ActionListener
+      {
+         public void actionPerformed( ActionEvent ae )
+         {
+            for ( int i = 0; i < sides; i++ )
+             {
+               for ( int j = 0; j < sides; j++ )
+               {
+                 if (sides==8)//place holder
+                 {
+                   
+                   return;
+                 }
+               }
+             }
+         }
       }
    }
    
